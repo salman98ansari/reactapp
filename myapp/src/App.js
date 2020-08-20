@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
+import Header from './components/layouts/Header'; 
 import Todos from './components/Todos';
+import AddTodo from './components/AddTodo';
+
 import './App.css';
 
 class App extends Component{
@@ -22,10 +25,35 @@ class App extends Component{
       }
     ]
   }
+  //mark to do toggling
+  markComplete =(id) => {
+    this.setState({todos : this.state.todos.map(todo =>{
+      if(todo.id === id){
+        todo.completed= !todo.completed
+      }
+      return todo;
+    }) });
+}
+
+//delete 
+//learn filter thing
+delTodo =(id) =>{
+  this.setState({ todos : [...this.state.todos.filter(todo => todo.id
+    !== id)]});
+}
+
+
+
   render(){
     return(
       <div className="App">
-        <Todos todos={this.state.todos}/>
+        <div className="container">  
+          <Header/>     
+          <AddTodo/>
+          <Todos todos={this.state.todos}
+          markComplete={this.markComplete}
+          delTodo={this.delTodo} />
+        </div>
       </div>
     );
   }
